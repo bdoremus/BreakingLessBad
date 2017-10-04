@@ -13,7 +13,7 @@ from matplotlib import dates as mdates
 # from sklearn.pipeline import make_pipeline
 
 def get_weather_forecast():
-    forecast = pd.DataFrame(columns=['date', 'businessUnit', 'maxTemp', 'minTemp', 'precip', 'elevation'])
+    forecast = pd.DataFrame(columns=['date', 'businessUnit', 'maxTemp', 'minTemp', 'precip'])
 
     bu_url = {'anadarko': 'https://api.weather.gov/gridpoints/AMA/100,59',
               'arkoma': 'https://api.weather.gov/gridpoints/TSA/65,50',
@@ -33,8 +33,6 @@ def get_weather_forecast():
             print("Error: ",forecast_list['status'])
             print("       ",forecast_list['detail'])
             continue
-
-        elevation = f_json['properties']['elevation']['value']
 
         # list of dicts with 'validTime' and 'value'
         # [{"validTime": "2017-10-02T09:00:00+00:00/PT2H", "value": 19.444444444445}]
@@ -91,8 +89,7 @@ def get_weather_forecast():
                                          'businessUnit': bu,
                                          'maxTemp': maxT,
                                          'minTemp': minT,
-                                         'precip': precip,
-                                         'elevation': elevation}])
+                                         'precip': precip}])
     print("Forecasted dates from {} to {}".format(forecast.date.min(), forecast.date.max()))
     return forecast
 
@@ -158,16 +155,8 @@ def create_X(weather_forecast, day_group):
     # Ensure there is at least one group
     numGroups = max(numGroups, 1)
 
-    # Create an elevation dictionary
-    elevation = {'anadarko': 960.1,
-                 'arkoma': 234.7,
-                 'durango': 2033.0,
-                 'easttexas': 76.2,
-                 'farmington': 1674.9,
-                 'wamsutter': 2053.1}
-
     # Create groups of size: day_group
-    data = pd.DataFrame(columns=['date', 'maxTemp', 'avgTemp', 'minTemp', 'precip', 'elevation', 'arkoma', 'durango', 'easttexas', 'farmington', 'wamsutter'])
+    data = pd.DataFrame(columns=['date', 'maxTemp', 'avgTemp', 'minTemp', 'precip', 'arkoma', 'durango', 'easttexas', 'farmington', 'wamsutter'])
     bu_masks, businessUnits = get_bu_masks(X)
     for i in range(numGroups):
         date_start = minDate + datetime.timedelta(days=(i*day_group))
@@ -182,7 +171,6 @@ def create_X(weather_forecast, day_group):
                                  'avgTemp': w.avgTemp.mean(),
                                  'minTemp': w.minTemp.min(),
                                  'precip': w.precip.sum(),
-                                 'elevation': elevation[bu],
                                  'arkoma': 1 if bu == 'arkoma' else 0,
                                  'durango': 1 if bu == 'durango' else 0,
                                  'easttexas': 1 if bu == 'easttexas' else 0,
