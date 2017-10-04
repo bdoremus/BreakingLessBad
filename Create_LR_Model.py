@@ -20,30 +20,19 @@ def main(max_polynomial=1, save_model=False, num_days_in_group=1, print_model=Fa
 
     score_model(model, X_test, y_test)
 
-
-    # # Print coefficient for n^1 Linear Regression
-    # coefs = model.steps[2][1].coef_
-    # x_int = model.steps[2][1].intercept_
-    # coef_total = sum(abs(coefs))+abs(x_int)
-    # print("Coefficients:")
-    # print("| X_intercept (anadarko) | {:.2f}% |  ".format(100*x_int/coef_total))
-    # for i, col in enumerate(np.delete(X_train.columns.values, 0)):
-    #     print("{}:   \t{:.2f}%".format(col, 100*coefs[i]/coef_total))
-
-
-    # # Print coefficients for n^2 Linear Regression
-    # coefs = model.steps[3][1].coef_
-    # x_int = model.steps[3][1].intercept_
-    # coef_total = sum(abs(coefs))+abs(x_int)
-    # linear_names = X_train.columns[1:]
-    # poly_names = model.steps[2][1].get_feature_names(linear_names)
-    # print("Coefficients:")
-    # print("| X_intercept (anadarko) | {:.2f}% |  ".format(100*x_int/coef_total))
-    # for n, c in zip(poly_names, coefs):
-    #     if abs(c/coef_total) > 0.01:
-    #         n = str.strip(n)
-    #         n = n.replace(" ", " * ")
-    #         print("| {} | {:.2f}% |  ".format(n, 100*c/coef_total))
+    # Print the coefficients
+    if print_model:
+        coefs = model.steps[2][1].coef_
+        x_int = model.steps[2][1].intercept_
+        coef_total = sum(abs(coefs))+abs(x_int)
+        poly_names = model.steps[1][1].get_feature_names(X_train.columns)
+        print("Coefficients:")
+        print("| X_intercept (anadarko) | {:.2f}% |  ".format(100*x_int/coef_total))
+        for n, c in zip(poly_names, coefs):
+            if True:#abs(c/coef_total) > 0.01:
+                n = str.strip(n)
+                n = n.replace(" ", " * ")
+                print("| {} | {:.2f}% |  ".format(n, 100*c/coef_total))
 
     if save_model:
         filename = './model_n{}.pkl'.format(max_polynomial)
