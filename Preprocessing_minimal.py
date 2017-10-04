@@ -276,7 +276,7 @@ def create_percentFailedByDate(sfa, nf, weather, grp_size=1):
     numUnits = (nf[['hrsOn', 'businessUnit']].groupby('businessUnit').sum()/366/24).to_dict()['hrsOn']
 
     # Create the dataframe to hold all features and target
-    data = pd.DataFrame(columns=['date', 'businessUnit', 'failureRate', 'maxTemp', 'avgTemp', 'minTemp', 'precip', 'elevation'])
+    data = pd.DataFrame(columns=['date', 'businessUnit', 'failureRate', 'maxTemp', 'avgTemp', 'minTemp', 'precip'])
 
     # Create a data point for each group of days
     numDays = (maxDate-minDate).days
@@ -306,8 +306,7 @@ def create_percentFailedByDate(sfa, nf, weather, grp_size=1):
                                  'maxTemp': w.TMAX.max(),
                                  'avgTemp': w.TAVG.mean(),
                                  'minTemp': w.TMIN.min(),
-                                 'precip': w.PRCP.sum(),
-                                 'elevation': w.ELEVATION.mean()}])
+                                 'precip': w.PRCP.sum()}])
 
     data = pd.get_dummies(data, columns=['businessUnit'], prefix='', prefix_sep='', drop_first=False)
     data.drop('anadarko', axis=1, inplace=True) # drop one of the dummy columns
