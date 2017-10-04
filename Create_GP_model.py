@@ -13,7 +13,7 @@ pd.options.mode.chained_assignment = None  # Turn off warnings for setting a sli
 '''
 '''
 def loadPickledData(num_days_in_group):
-    filename = './data/data_{}day.pkl'.format(num_days_in_group)
+    filename = './data/data_{}day_noe.pkl'.format(num_days_in_group)
     with open(filename, 'rb') as f:
         X = pickle.load(f)
         y = X.pop('failureRate').values
@@ -137,7 +137,7 @@ def plot_confidence_interval(X, y, y_pred, sigma):
 if __name__ == '__main__':
     create_graph = False
     only_test = False
-    save_model = True
+    save_model = False
     num_days_in_group = 7
     X_train, X_test, y_train, y_test, X, y, X_data, sc = create_data(num_days_in_group)
 
