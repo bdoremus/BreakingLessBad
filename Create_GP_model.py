@@ -137,7 +137,7 @@ def plot_confidence_interval(X, y, y_pred, sigma):
 if __name__ == '__main__':
     create_graph = False
     only_test = False
-    save_model = False
+    save_model = True
     num_days_in_group = 7
     X_train, X_test, y_train, y_test, X, y, X_data, sc = create_data(num_days_in_group)
 

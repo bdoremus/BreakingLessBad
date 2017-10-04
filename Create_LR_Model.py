@@ -147,8 +147,8 @@ def get_bu_masks(X):
 if __name__ == '__main__':
     # Options for running this file
     save_model=True
-    print_model=True
-    max_polynomial = 1
+    print_model=False
+    max_polynomial = 2
     num_days_in_group = 7
 
     # crossval_trials()
