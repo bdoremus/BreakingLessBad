@@ -177,5 +177,3 @@ Predicted failures for next week (10/3 - 10/10) using Gaussian Process Regressor
 https://www.linkedin.com/in/bdoremus/
 
 As a Data Scientist with a degree in Electrical and Computer Engineer and 10 years of experience teaching, I bring a unique skill set to any Data Science team. Combining my strong technical background in software and mathematics with the daily experiences I had leading a classroom, I have a proven ability to communicate with all stakeholders, be they technically adept or focused on other fields. My hobbies tend to inform my work in interesting ways, be it through music, microcontrollers, or woodcraft.
-
-# Obligatory Cat Picture
